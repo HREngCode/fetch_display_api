@@ -128,8 +128,6 @@ function displayFilteredData(filteredData) {
     nameElement.textContent = item.name;
     itemDiv.appendChild(nameElement);
 
-    // Add other item details as needed
-
     itemContainer.appendChild(itemDiv);
   });
 }
