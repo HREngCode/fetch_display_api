@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Fetch Assignment</title>
+</head>
+
+<body>
+  <div>
+    <h1>Beer API</h1>
+    <div class="header-container">
+      <div class="heading">
+
+      </div>
+      <div class="sort">
+        <div class="sort-name">
+          <span>Sort by Name</span>
+          <button id="sortAsc">A-Z</button>
+          <button id="sortDesc">Z-A</button>
+        </div>
+
+
+        <div class="search-container">
+          <div>
+            <input type="text" id="searchYear" placeholder="Enter year" />
+            <button id="searchButton">Search</button>
+          </div>
+
+          <div>
+            <p>Beers Brewed After Year Entered: <span id="count">0</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="section-title">
+        <h2>Main Collection</h2>
+      </div>
+    </div>
+    <section>
+      <div id="main" class="container">
+        <div class="heading">
+        </div>
+      </div>
+    </section>
+    <div class="section-title">
+      <h2>Favorites Collection</h2>
+    </div>
+    <section>
+      <div id="favs" class="container">
+      </div>
+      <!--item list starts-->
+      <div id="favs">
+
+      </div>
+      <!--item list starts-->
+    </section>
+    <script src="index.js"></script>
+</body>
+
+</html>

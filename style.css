@@ -1,0 +1,52 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+}
+
+.sort {
+  margin-top: 20px;
+  display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sort-name,
+.search-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.search-container {justify-content: flex-end;}
+
+.section-title {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#main,
+#favs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.item {
+  background-color: burlywood;
+  padding: 15px;
+  text-align: center;
+  margin: 10px;
+  border: 2px solid black;
+  width: 220px;
+  height: 250px;
+}
+
+.item p {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
