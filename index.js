@@ -1,4 +1,3 @@
-// const apiKey = "12e531898ef354c799061403781fc6bc0e8aef16";
 const apiUrl = " https://api.punkapi.com/v2/beers?page=2&per_page=30";
 let data = [];
 let sortDirection = "asc";
@@ -44,23 +43,31 @@ function displayData(data) {
 
     const detailDiv = document.createElement("div");
     detailDiv.classList.add("detail");
+    itemDiv.appendChild(detailDiv);
 
     const dateTitleElement = document.createElement("h3");
-    dateTitleElement.textContent = "First Brewed: ";
+    dateTitleElement.textContent = "1st Brew: ";
     itemDiv.appendChild(dateTitleElement);
 
     const dateBrewedElement = document.createElement("h3");
     dateBrewedElement.textContent = item.first_brewed;
     itemDiv.appendChild(dateBrewedElement);
 
+    const tagDetailDiv = document.createElement("div");
+    tagDetailDiv.classList.add("tag-detail");
+    itemDiv.appendChild(tagDetailDiv);
+
     const taglineTitleElement = document.createElement("p");
     taglineTitleElement.textContent = "Tagline: ";
-    itemDiv.appendChild(taglineTitleElement);
 
     const taglineElement = document.createElement("p");
     taglineElement.textContent = item.tagline;
-    itemDiv.appendChild(taglineElement);
 
+    detailDiv.appendChild(dateTitleElement);
+    detailDiv.appendChild(dateBrewedElement);
+    detailDiv.appendChild(tagDetailDiv);
+    tagDetailDiv.appendChild(taglineTitleElement);
+    tagDetailDiv.appendChild(taglineElement);
     itemContainer.appendChild(itemDiv);
   });
 
