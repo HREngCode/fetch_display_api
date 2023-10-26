@@ -5,27 +5,27 @@ let sortDirection = "asc";
 const main = document.getElementById("main");
 const favs = document.getElementById("favs");
 
-fetch(apiUrl)
-  .then((response) => response.json())
-  .then((responseData) => {
-    data = responseData;
-    displayData(data);
-  })
-  .catch((error) => {
-    console.error("Error fetching data:", error);
+const fetchItems = (apiUrl) => {
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((responseData) => {
+      data = responseData;
+      displayData(data);
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+};
+
+fetchItems(apiUrl);
+
+const sortButtons = document.querySelectorAll(".sortBtn");
+
+sortButtons.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    const direction = e.target.dataset.sort;
+    sortNameData(direction);
   });
-
-const sortAscButton = document.getElementById("sortAsc");
-const sortDescButton = document.getElementById("sortDesc");
-
-sortAscButton.addEventListener("click", () => {
-  sortDirection = "asc";
-  sortNameData();
-});
-
-sortDescButton.addEventListener("click", () => {
-  sortDirection = "desc";
-  sortNameData();
 });
 
 function displayData(data) {
@@ -68,7 +68,7 @@ function displayData(data) {
     detailDiv.appendChild(tagDetailDiv);
     tagDetailDiv.appendChild(taglineTitleElement);
     tagDetailDiv.appendChild(taglineElement);
-    itemContainer.appendChild(itemDiv);
+    main.appendChild(itemDiv);
   });
 
   const allItems = document.querySelectorAll(".item");
@@ -82,7 +82,7 @@ function displayData(data) {
   });
 }
 
-function sortNameData() {
+function sortNameData(sortDirection) {
   data.sort((a, b) => {
     const nameA = a.name.toLowerCase();
     const nameB = b.name.toLowerCase();
@@ -98,12 +98,8 @@ function sortNameData() {
 
 const updateCollections = (id, direction) => {
   const item = document.getElementById(id);
-
-  if (direction === "toFavs") {
-    favs.appendChild(item);
-  } else {
-    main.appendChild(item);
-  }
+  const container = direction === "toFavs" ? favs : main;
+  container.appendChild(item);
 };
 
 function filterItemsByYear(data, year) {
@@ -143,4 +139,14 @@ searchButton.addEventListener("click", () => {
   } else {
     alert("Please enter a valid year.");
   }
+});
+
+const clearButton = document.getElementById("clearButton");
+clearButton.addEventListener("click", () => {
+  const searchYearInput = document.getElementById("searchYear");
+  searchYearInput.value = "";
+
+  const countElement = document.getElementById("count");
+  countElement.textContent = "Count: 0";
+  displayData(data);
 });

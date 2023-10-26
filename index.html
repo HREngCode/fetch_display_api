@@ -18,8 +18,8 @@
       <div class="sort">
         <div class="sort-name">
           <span>Sort by Name</span>
-          <button id="sortAsc">A-Z</button>
-          <button id="sortDesc">Z-A</button>
+          <button class="sortBtn" id="sortAsc" data-sort="asc">A-Z</button>
+          <button class="sortBtn" id="sortDesc" data-sort="desc">Z-A</button>
         </div>
 
 
@@ -27,6 +27,7 @@
           <div>
             <input type="text" id="searchYear" placeholder="Enter year" />
             <button id="searchButton">Search</button>
+            <button id="clearButton">Clear</button>
           </div>
 
           <div>
@@ -34,29 +35,30 @@
           </div>
         </div>
       </div>
-      <div class="section-title">
-        <h2>Main Collection</h2>
-      </div>
     </div>
-    <section>
-      <div id="main" class="container">
-        <div class="heading">
-        </div>
-      </div>
-    </section>
     <div class="section-title">
-      <h2>Favorites Collection</h2>
+      <h2>Main Collection</h2>
     </div>
-    <section>
-      <div id="favs" class="container">
+  </div>
+  <section>
+    <div id="main" class="container">
+      <div class="heading">
       </div>
-      <!--item list starts-->
-      <div id="favs">
+    </div>
+  </section>
+  <div class="section-title">
+    <h2>Favorites Collection</h2>
+  </div>
+  <section>
+    <div id="favs" class="container">
+    </div>
+    <!--item list starts-->
+    <div id="favs">
 
-      </div>
-      <!--item list starts-->
-    </section>
-    <script src="index.js"></script>
+    </div>
+    <!--item list starts-->
+  </section>
+  <script src="index.js"></script>
 </body>
 
 </html>
