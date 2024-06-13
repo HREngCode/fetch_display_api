@@ -1,23 +1,42 @@
-const apiUrl = " https://api.punkapi.com/v2/beers?page=2&per_page=30";
+const apiUrl = "https://www.amiiboapi.com/api/amiibo/";
+const characters = [];
+const images = [];
 let data = [];
 let sortDirection = "asc";
 
 const main = document.getElementById("main");
 const favs = document.getElementById("favs");
 
-const fetchItems = (apiUrl) => {
-  fetch(apiUrl)
+const fetchNintendo = (apiUrl) => {
+  return fetch(apiUrl)
     .then((response) => response.json())
-    .then((responseData) => {
-      data = responseData;
-      displayData(data);
+    .then((response) => {
+      //limits the data
+      const limitedData = response.amiibo.slice(0, 30);
+      characters.push(...limitedData);
+      displayData(characters);
+
+      console.log(characters);
+
+      const charNames = characters.map((character) => {
+        return character.name;
+      });
+
+      characters.filter((character) => {
+        if (character.name === "Peach") {
+          images.push(character.image);
+        }
+      });
+
+      console.log(charNames);
+      console.log(images);
     })
     .catch((error) => {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data: ", error);
     });
 };
 
-fetchItems(apiUrl);
+fetchNintendo(apiUrl);
 
 const sortButtons = document.querySelectorAll(".sortBtn");
 
@@ -45,31 +64,32 @@ function displayData(data) {
     detailDiv.classList.add("detail");
     itemDiv.appendChild(detailDiv);
 
-    const dateTitleElement = document.createElement("h3");
-    dateTitleElement.textContent = "1st Brew: ";
-    itemDiv.appendChild(dateTitleElement);
-
-    const dateBrewedElement = document.createElement("h3");
-    dateBrewedElement.textContent = item.first_brewed;
-    itemDiv.appendChild(dateBrewedElement);
+    const imageElement = document.createElement("img");
+    imageElement.setAttribute("src", item.image);
+    imageElement.setAttribute("width", "125");
+    imageElement.setAttribute("height", "95");
+    imageElement.setAttribute("alt", "Character Image");
+    itemDiv.appendChild(imageElement);
 
     const tagDetailDiv = document.createElement("div");
     tagDetailDiv.classList.add("tag-detail");
     itemDiv.appendChild(tagDetailDiv);
 
     const taglineTitleElement = document.createElement("p");
-    taglineTitleElement.textContent = "Tagline: ";
+    taglineTitleElement.textContent = "Release Date: ";
 
     const taglineElement = document.createElement("p");
-    taglineElement.textContent = item.tagline;
+    taglineElement.textContent = item.release.na;
 
-    detailDiv.appendChild(dateTitleElement);
-    detailDiv.appendChild(dateBrewedElement);
+    // detailDiv.appendChild(dateTitleElement);
+    detailDiv.appendChild(imageElement);
     detailDiv.appendChild(tagDetailDiv);
     tagDetailDiv.appendChild(taglineTitleElement);
     tagDetailDiv.appendChild(taglineElement);
     main.appendChild(itemDiv);
   });
+  const countElement = document.getElementById("count");
+  countElement.textContent = `Count: ${data.length}`;
 
   const allItems = document.querySelectorAll(".item");
   allItems.forEach((item) => {
@@ -83,7 +103,7 @@ function displayData(data) {
 }
 
 function sortNameData(sortDirection) {
-  data.sort((a, b) => {
+  characters.sort((a, b) => {
     const nameA = a.name.toLowerCase();
     const nameB = b.name.toLowerCase();
     if (sortDirection === "asc") {
@@ -93,7 +113,7 @@ function sortNameData(sortDirection) {
     }
   });
 
-  displayData(data);
+  displayData(characters);
 }
 
 const updateCollections = (id, direction) => {
@@ -104,28 +124,13 @@ const updateCollections = (id, direction) => {
 
 function filterItemsByYear(data, year) {
   const filteredData = data.filter((item) => {
-    const firstBrewedYear = parseInt(item.first_brewed.split("/")[1]);
-    return firstBrewedYear > year;
+    const releaseDateNA = item.release.na;
+    if (releaseDateNA) {
+      const releaseYear = parseInt(releaseDateNA.split("-")[0]);
+      return releaseYear > year;
+    }
   });
   return filteredData;
-}
-function displayFilteredData(filteredData) {
-  const itemContainer = document.getElementById("main");
-  const countElement = document.getElementById("count");
-  itemContainer.innerHTML = "";
-
-  countElement.textContent = `Count: ${filteredData.length}`;
-
-  filteredData.forEach((item) => {
-    const itemDiv = document.createElement("div");
-    itemDiv.classList.add("item");
-
-    const nameElement = document.createElement("h2");
-    nameElement.textContent = item.name;
-    itemDiv.appendChild(nameElement);
-
-    itemContainer.appendChild(itemDiv);
-  });
 }
 
 const searchButton = document.getElementById("searchButton");
@@ -134,8 +139,8 @@ searchButton.addEventListener("click", () => {
   const yearToSearch = parseInt(searchYearInput.value);
 
   if (!isNaN(yearToSearch)) {
-    const filteredData = filterItemsByYear(data, yearToSearch);
-    displayFilteredData(filteredData);
+    const filteredData = filterItemsByYear(characters, yearToSearch);
+    displayData(filteredData);
   } else {
     alert("Please enter a valid year.");
   }
@@ -148,5 +153,65 @@ clearButton.addEventListener("click", () => {
 
   const countElement = document.getElementById("count");
   countElement.textContent = "Count: 0";
-  displayData(data);
+  displayData(characters);
 });
+
+// const objectArray = [
+//   {
+//     name: "Jerry Foster",
+//     occupation: "Welder",
+//     gender: "Male",
+//     age: "46",
+//   },
+//   {
+//     name: "Samantha Collins",
+//     occupation: "Assembler",
+//     gender: "Female",
+//     age: "47",
+//   },
+//   {
+//     name: "Sebastian Miller",
+//     occupation: "Painter",
+//     gender: "Male",
+//     age: "32",
+//   },
+//   {
+//     name: "Pamela Brownstone",
+//     occupation: "Shipping",
+//     gender: "Female",
+//     age: "51",
+//   },
+//   {
+//     name: "Matthew VanWyk",
+//     occupation: "Machinist",
+//     gender: "Male",
+//     age: "41",
+//   },
+//   {
+//     name: "Alice Sutherland",
+//     occupation: "Office",
+//     gender: "Female",
+//     age: "26",
+//   },
+// ];
+
+// console.log(objectArray);
+
+// let data = [];
+
+// const apiUrlD =
+//   "https://api.dailymotion.com/videos?channel=sport&limit=10&search=football";
+
+// const fetchApi = (apiUrl) => {
+//   return fetch(apiUrl).then((response) => response.json());
+// };
+
+// fetchApi(apiUrl)
+//   .then((responseData) => {
+//     responseData.list.forEach((item) => {
+//       console.log(item);
+//     });
+//   })
+//   .catch((error) => {
+//     console.error("Error fetching data:", error);
+//   });
